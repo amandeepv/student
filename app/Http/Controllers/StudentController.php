@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\Student;
 
@@ -14,7 +15,7 @@ class StudentController extends Controller
     }
     public function store(Request $request)
     {
-		Student::store($request);
-		return redirect()->route('home')->with('info','Student Record saved successfully|');
+		Student::store($request->toArray());
+		
 	}
 }

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Student extends Model
 {
@@ -10,13 +11,16 @@ class Student extends Model
             "name",
             "age",
         ];
-    public static function store($request, $student = null)
+    public static function store($request)
     {
-        if($student === null)
-        {
+        $student = self::whereName($request['name'])->whereAge($request['age'])->get();
+        if(sizeof($student) > 0){
+            //You may throw an error here. 
+            $student = $student->first();
+        }else{
             $student = new Student();
         }
-        $student->fill($request->toArray());
+        $student->fill($request);
         $student->save();
     }
 }
